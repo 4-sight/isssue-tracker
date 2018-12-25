@@ -1,41 +1,43 @@
 /*
-*
-*
-*       Complete the API routing below
-*
-*
-*/
+ *
+ *
+ *       Complete the API routing below
+ *
+ *
+ */
 
 'use strict';
 
-var expect = require('chai').expect;
-var MongoClient = require('mongodb');
-var ObjectId = require('mongodb').ObjectID;
+const ProjectModel = require('../models/projects')
 
-const CONNECTION_STRING = process.env.DB; //MongoClient.connect(CONNECTION_STRING, function(err, db) {});
 
 module.exports = function (app) {
 
   app.route('/api/issues/:project')
-  
-    .get(function (req, res){
-      var project = req.params.project;
-      
+
+    .get(async (req, res) => {
+      let project = req.params.project;
+      let response = await ProjectModel.listAllIssues(project)
+      if (!response) {
+        res.send('project could not be found')
+      }
+      console.log('project: ', project)
+      console.log('response: ', response)
     })
-    
-    .post(function (req, res){
-      var project = req.params.project;
-      
+
+    .post(function (req, res) {
+      let project = req.params.project;
+
     })
-    
-    .put(function (req, res){
-      var project = req.params.project;
-      
+
+    .put(function (req, res) {
+      let project = req.params.project;
+
     })
-    
-    .delete(function (req, res){
-      var project = req.params.project;
-      
+
+    .delete(function (req, res) {
+      let project = req.params.project;
+
     });
-    
+
 };
