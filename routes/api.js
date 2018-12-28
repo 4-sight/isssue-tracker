@@ -114,7 +114,7 @@ module.exports = function (app) {
           }
       }
       if(!id) {res.send('_id error')}
-      else if(changes.length === 0){
+      else if(isEmpty(changes)){
         res.send('no updated field sent')
       } else {
         let response
@@ -148,7 +148,9 @@ module.exports = function (app) {
       const project = req.params.project;
       const id = req.body._id
 
-      if(!id) {res.send('_id error')}
+      if(!id) {
+        console.error('_id error')
+        res.send('_id error')}
       else {
         try{await ProjectModel.deleteIssue(project, id)}
         catch(err){
