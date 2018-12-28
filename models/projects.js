@@ -9,7 +9,7 @@ const projectSchema = new mongoose.Schema({
     updated_on: Date,
     created_by: String,
     assigned_to: String,
-    open: String,
+    open: Boolean,
     status_text: String
   }]
 })
@@ -48,7 +48,7 @@ ProjectModel.addIssue = function (project, issue) {
         updated_on: timeStamp,
         created_by: issue.created_by,
         assigned_to: issue.assigned_to ? issue.assigned_to : "",
-        open: 'true',
+        open: true,
         status_text: issue.status_text ? issue.status_text : ""
       }
     }
@@ -106,10 +106,12 @@ ProjectModel.listAllIssues = function (project) {
 
 ProjectModel.listFilteredIssues = function (project, queries) {
 
-  let key = 'open'
   let conditions= []
 
   for(let key in queries) {
+    if(key === "open") {
+      key = queries.key == "true"
+    }
     conditions.push({ $eq: [`$$issue.${key}`, queries[key]]})
   }
 
