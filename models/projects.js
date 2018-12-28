@@ -107,15 +107,14 @@ ProjectModel.listAllIssues = function (project) {
 ProjectModel.listFilteredIssues = function (project, queries) {
 
   let conditions= []
-  console.log(queries)
+
   for(let key in queries) {
     if(key === "open") {
       queries[key] = queries[key] == "true"
     }
-    console.log(key)
     conditions.push({ $eq: [`$$issue.${key}`, queries[key]]})
   }
-    console.log(conditions)
+
   return ProjectModel.aggregate(
     [
       { $match: {project: project}},
