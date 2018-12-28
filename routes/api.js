@@ -61,7 +61,7 @@ module.exports = function (app) {
       try{response = await ProjectModel.addIssue(project, issue)}
       catch(err) {console.error('failed to add issue', err)}
       //Return added issue
-      res.json(response.issues)
+      res.json(response.issues[0])
     })
 
     .put(async (req, res) => {
