@@ -107,6 +107,7 @@ module.exports = function (app) {
             assigned_to: changes.assigned_to || oldIssue.assigned_to,
             status_text: changes.status_text || oldIssue.status_text,
             open: changes.open || oldIssue.open,
+            created_on: oldIssue.created_on,
             updated_on: timeStamp
           }
           await ProjectModel.updateIssue(id, updatedIssue)
