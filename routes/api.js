@@ -94,6 +94,7 @@ module.exports = function (app) {
           created_on: created_on,
           updated_on: updated_on
         }
+        console.log(id)
         res.json(output)
       }
     })
