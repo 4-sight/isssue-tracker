@@ -88,6 +88,7 @@ suite('Functional Tests', function() {
           status_text: 'In QA'
         })
 
+        assert.equal(res.status, 200)
         assert.equal(res.text, 'missing inputs')
       });
       
