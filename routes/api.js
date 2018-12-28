@@ -100,6 +100,7 @@ module.exports = function (app) {
           const oldIssue = response[0]._doc.issues[0]._doc
           const timeStamp = new Date().toString()
           const updatedIssue = {
+            _id: id,
             issue_title: changes.issue_title || oldIssue.issue_title,
             issue_text: changes.issue_text || oldIssue.issue_text,
             created_by: changes.created_by || oldIssue.created_by,

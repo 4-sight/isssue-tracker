@@ -87,7 +87,7 @@ ProjectModel.findIssue = function (id) {
 }
 
 ProjectModel.updateIssue = function(id, update) {
-  
+
   return this.findOneAndUpdate(
     { 'issues._id': id },
     { $set: { 'issues.$': update}},
