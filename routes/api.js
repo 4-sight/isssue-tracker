@@ -114,7 +114,7 @@ module.exports = function (app) {
           console.error('could not update', err)
           res.send(`could not update ${id}`)
         }
-        res.send('update successful')
+        res.send('successfully updated')
       }
     })
 
