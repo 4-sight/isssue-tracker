@@ -39,7 +39,7 @@ module.exports = function (app) {
       } else {
         try{response = await ProjectModel.listFilteredIssues(project, query)}
         catch(err){console.error('Failed to access db', err)}
-        console.log(response)
+
         res.json(response[0].issues)
       }
     })
@@ -94,7 +94,7 @@ module.exports = function (app) {
           created_on: created_on,
           updated_on: updated_on
         }
-        console.log(id)
+
         res.json(output)
       }
     })

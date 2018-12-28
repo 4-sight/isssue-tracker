@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const ObjectId = require('mongodb').ObjectId
 
 const projectSchema = new mongoose.Schema({
   project: String,
@@ -55,8 +56,6 @@ ProjectModel.addIssue = function (project, issue) {
   }, {
     new: true,
     projection: {
-      _id: 0,
-      project: 0,
       issues: {
         $slice: -1
       }
@@ -112,9 +111,11 @@ ProjectModel.listFilteredIssues = function (project, queries) {
     if(key === "open") {
       queries[key] = queries[key] == "true"
     }
+    if(key === '_id') {
+      queries[key] = ObjectId(queries[key])
+    }
     conditions.push({ $eq: [`$$issue.${key}`, queries[key]]})
   }
-
   return ProjectModel.aggregate(
     [
       { $match: {project: project}},
