@@ -45,23 +45,34 @@ module.exports = function (app) {
     })
 
     .post(async (req, res) => {
-      let project = req.params.project;
-      let issue = req.body
-      let check
-      //Check if project exists
-      try{check = await ProjectModel.findProject(project)}
-      catch(err){console.error('Failed to access db', err)}
-      //If not create project
-      if(!check) { 
-        try{await ProjectModel.addProject(project)}
-        catch(err){ console.error('failed to create new Project', err)}
+      const project = req.params.project;
+      const issue = req.body
+      const {
+        issue_title,
+        issue_text,
+        created_by
+      } = req.body
+
+      if (!issue_title || !issue_text || !created_by) {
+        res.send('missing inputs')
+      } 
+      else {
+        let check
+        //Check if project exists
+        try{check = await ProjectModel.findProject(project)}
+        catch(err){console.error('Failed to access db', err)}
+        //If not create project
+        if(!check) { 
+          try{await ProjectModel.addProject(project)}
+          catch(err){ console.error('failed to create new Project', err)}
+        }
+        //Add issue to project
+        let response
+        try{response = await ProjectModel.addIssue(project, issue)}
+        catch(err) {console.error('failed to add issue', err)}
+        //Return added issue
+        res.json(response.issues[0])
       }
-      //Add issue to project
-      let response
-      try{response = await ProjectModel.addIssue(project, issue)}
-      catch(err) {console.error('failed to add issue', err)}
-      //Return added issue
-      res.json(response.issues[0])
     })
 
     .put(async (req, res) => {
